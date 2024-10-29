@@ -1,0 +1,9 @@
+<app-email-tracking-form
+  (formSubmitted)="handleFormSubmission($event)"
+></app-email-tracking-form>
+
+<app-email-status-table
+  *ngIf="emailStatusDetails.length"
+  [emailStatusDetailsList]="emailStatusDetails"
+  (fetchStatusRequestSubmitted)="handleFetchStatusRequest($event)"
+></app-email-status-table>
