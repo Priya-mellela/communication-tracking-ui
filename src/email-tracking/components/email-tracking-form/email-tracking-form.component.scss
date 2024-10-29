@@ -1,0 +1,30 @@
+.example-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 24px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .example-full-width {
+    margin-bottom: 16px;
+    width: 100%;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 16px;
+
+    button {
+      min-width: 90px;
+
+      &[color="primary"] {
+        font-weight: 500;
+      }
+    }
+  }
+}

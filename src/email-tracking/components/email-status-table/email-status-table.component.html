@@ -1,0 +1,82 @@
+<table mat-table [dataSource]="emailStatusDetailsList" class="mat-elevation-z8">
+  <ng-container matColumnDef="batchId">
+    <th mat-header-cell *matHeaderCellDef>Batch ID</th>
+    <td mat-cell *matCellDef="let element">{{ element.batchId }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="accountId">
+    <th mat-header-cell *matHeaderCellDef>Account ID</th>
+    <td mat-cell *matCellDef="let element">{{ element.accountId }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="scheduledDate">
+    <th mat-header-cell *matHeaderCellDef>Scheduled Date</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.scheduledDate || "N/A" }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="mailFrom">
+    <th mat-header-cell *matHeaderCellDef>Mail from</th>
+    <td mat-cell *matCellDef="let element">{{ element.mailFrom || "N/A" }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="messageGuid">
+    <th mat-header-cell *matHeaderCellDef>MessageGuid</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.messageGuid || "N/A" }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="emailStatus">
+    <th mat-header-cell *matHeaderCellDef>Email Status</th>
+    <td mat-cell *matCellDef="let element">
+      <span
+        *ngIf="
+          element.emailStatus && element.emailStatus != 'Unavailable';
+          else showFetchEmailStatusLink
+        "
+      >
+        {{ element.emailStatus || "N/A" }}
+      </span>
+      <ng-template #showFetchEmailStatusLink>
+        <a (click)="fetchStatus('email', element)">Refresh Status</a>
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="emailStatusDetail">
+    <th mat-header-cell *matHeaderCellDef>Email Status Details</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.emailStatusDetail || "N/A" }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="sfmcStatus">
+    <th mat-header-cell *matHeaderCellDef>SFMC Status</th>
+    <td mat-cell *matCellDef="let element">
+      <span
+        *ngIf="
+          ['Failed', 'Scheduled', 'Cancelled'].includes(element.emailStatus) ||
+            (element.sfmcStatus && element.sfmcStatus != 'Unavailable');
+          else showFetchSfmcStatusLink
+        "
+      >
+        {{ element.sfmcStatus || "N/A" }}
+      </span>
+      <ng-template #showFetchSfmcStatusLink>
+        <span (click)="fetchStatus('sfmc', element)">
+          Refresh status <mat-icon>refresh</mat-icon></span
+        >
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="sfmcStatusDetail">
+    <th mat-header-cell *matHeaderCellDef>SFMC Status Details</th>
+    <td mat-cell *matCellDef="let element">{{ element.sfmcStatusDetail }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
